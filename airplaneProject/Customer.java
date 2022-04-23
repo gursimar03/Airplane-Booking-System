@@ -152,4 +152,10 @@ public class Customer {
         
     }
 
+    public void displayDetails(){
+
+        System.out.println("\nName: "+this.costumerName+"\nDate Of Birth: "+this.costumerDateOfBirth+"\nPassport Number: "+this.costumerPassport+"\nBooked Seat Number:"+this.BookedSeatNumber);
+
+    }
+
 }

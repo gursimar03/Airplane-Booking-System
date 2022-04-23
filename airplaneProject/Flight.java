@@ -83,4 +83,13 @@ public class Flight {
         return Departure_airport + "   " + Departure_time;
     }
 
+
+
+    public void showFlightDetails(String menuType){
+
+        if(menuType.equals("single"))
+            System.out.println("\nFlight Name: " + this.airline +"\nDeparture Airport: "+this.Departure_airport+"\nDeparture time: "+this.Departure_time+"\nArrival Airport: "+ this.Arrival_airport+ "\nArrival Time: "+this.Arrival_time+"\n" );
+        else 
+            System.out.println(this.airline+" "+this.Departure_airport+" "+this.Departure_time+" "+this.Arrival_airport+" "+this.Arrival_time);
+    }
 }

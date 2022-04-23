@@ -8,17 +8,19 @@ import java.util.*;
 public class mainApp {
 
     public static ArrayList<ArrayList<String>> data = new ArrayList<>();
-    public static ArrayList<ArrayList<Customer>> cmers = new ArrayList<>();
+    public static ArrayList<ArrayList<Customer>> customersArrayList = new ArrayList<>();
     public static ArrayList<Flight> flighData = new ArrayList<>();
     public static ArrayList<ArrayList<String>> seatNumbers = new ArrayList<>();
     public static boolean firstCustomer = true;
-    public static int numberOfAccounts = 0;
+    public static int numberOfAccounts = 1;
 
     public static void main(String[] args) throws IOException {
 
         fileReader();
+        adminView();
         mainMenu();
-        
+       
+
     }
 
     public static void bookingMenu() {
@@ -26,14 +28,10 @@ public class mainApp {
         Scanner keyboard = new Scanner(System.in);
 
         System.out.println("FLIGHT OPTIONS ");
-        for (int i = 0; i < data.size(); i++) {
-
-            System.out.println(data.get(i));
-
-        }
+        displayMenu();
 
         System.out.println("Please enter your flight number to buy the ticket");
-        int opt = keyboard.nextInt() - 1;
+        int optionKey = keyboard.nextInt() - 1;
 
         keyboard.nextLine();
 
@@ -63,33 +61,33 @@ public class mainApp {
         System.out.println("Please enter your phone number");
         String ph = keyboard.nextLine();
 
-        for (int i = 0; i < seatNumbers.get(opt).size() - 1; i++) {
+        for (int i = 0; i < seatNumbers.get(optionKey).size() - 1; i++) {
 
             if (i % 10 == 0) {
                 System.out.println("");
             }
 
-            System.out.print(seatNumbers.get(opt).get(i) + " ");
+            System.out.print(seatNumbers.get(optionKey).get(i) + " ");
 
         }
 
         System.out.println("\nPlease enter your seat number (Exactly as menstioned above)");
         String seatNum = keyboard.nextLine();
 
-        int indexOfSeat = seatNumbers.get(opt).indexOf(seatNum);
+        int indexOfSeat = seatNumbers.get(optionKey).indexOf(seatNum);
         String bookedSeat = "";
 
-        if (seatNumbers.get(opt).get(indexOfSeat) != " ") {
-            bookedSeat = seatNumbers.get(opt).get(indexOfSeat);
-            seatNumbers.get(opt).set(indexOfSeat, " ");
+        if (seatNumbers.get(optionKey).get(indexOfSeat) != " ") {
+            bookedSeat = seatNumbers.get(optionKey).get(indexOfSeat);
+            seatNumbers.get(optionKey).set(indexOfSeat, " ");
         }
 
-        cmers.get(opt).add(new Customer(name, date, passport, g, ph, bookedSeat));
+        customersArrayList.get(optionKey).add(new Customer(name, date, passport, g, ph, bookedSeat));
 
-        cmers.get(opt).get(cmers.get(opt).size() - 1).display();
-        
-        // mainMenu();
-        adminView();
+        customersArrayList.get(optionKey).get(customersArrayList.get(optionKey).size() - 1).display();
+
+        mainMenu();
+       
 
     }
 
@@ -107,11 +105,17 @@ public class mainApp {
 
         if (data.size() == 1) {
             s = 0;
-        } else {
-            s -= 1;
+        }  
+
+        int c =0;
+        if(flighData.size() == 0){
+            c = 0;
+        }else{
+            c = flighData.size()-1;
         }
 
-        for (int a = 0; a < s; a++) {
+
+        for (int a = c ; a < s; a++) {
 
             index = 0;
             fligString = data.get(a).get(index);
@@ -128,12 +132,13 @@ public class mainApp {
             index = 0;
 
             flighData.add(
-                    new Flight(fligString, dString, dtime, aaString, atime, seatNumbers.get(a), cmers.get(a)));
+                    new Flight(fligString, dString, dtime, aaString, atime, seatNumbers.get(a),
+                            customersArrayList.get(a)));
 
         }
 
         mainMenu();
-        
+
     }
 
     public static void mainMenu() {
@@ -154,7 +159,10 @@ public class mainApp {
                 login();
                 break;
             case 3:
-                viewBookings();
+                view();
+                break;
+            case 4:
+                showall();
                 break;
             default:
                 System.out.println("Wrong Input!");
@@ -164,6 +172,20 @@ public class mainApp {
 
     }
 
+    public static void showall() {
+
+        for (int i = 0; i < data.size(); i++) {
+                System.out.println(data.get(i).toString());
+        }
+
+        for (int i = 0; i < flighData.size(); i++) {
+            System.out.println(flighData.get(i).getAirline());
+    }
+
+        mainMenu();
+    }
+
+
     public static void login() {
 
         Scanner keyboard = new Scanner(System.in);
@@ -172,32 +194,33 @@ public class mainApp {
         String adminName = keyboard.nextLine();
         System.out.println("Please enter Admin password");
         String adminPassword = keyboard.nextLine();
-        
+        System.out.println(numberOfAccounts);
         if (adminName.equals("LordGursimar") && adminPassword.equals("nothankyou")) {
 
             data.add(new ArrayList<String>());
             seatNumbers.add(new ArrayList<String>());
-            cmers.add(new ArrayList<Customer>());
+            customersArrayList.add(new ArrayList<Customer>());
+            
 
             System.out.println("Please enter flight name ");
             String name = keyboard.nextLine();
-            data.get(numberOfAccounts).add(name);
+            data.get(data.size()-1).add(name);
 
             System.out.println("Please enter departure airport");
             String dString = keyboard.nextLine();
-            data.get(numberOfAccounts).add(dString);
+            data.get(data.size()-1).add(dString);
 
             System.out.println("Please enter departure time");
             String dtime = keyboard.nextLine();
-            data.get(numberOfAccounts).add(dtime);
+            data.get(data.size()-1).add(dtime);
 
             System.out.println("Please enter arrival airport");
             String aname = keyboard.nextLine();
-            data.get(numberOfAccounts).add(aname);
+            data.get(data.size()-1).add(aname);
 
             System.out.println("Please enter arrival time");
             String atime = keyboard.nextLine();
-            data.get(numberOfAccounts).add(atime);
+            data.get(data.size()-1).add(atime);
 
             System.out.println("Choose your plane option ");
             System.out.println("1. Boeing 737");
@@ -260,7 +283,7 @@ public class mainApp {
             for (int j = 1; j <= lengthOfSection; j++) {
 
                 seatNumber = seatSection + (Integer.toString(j));
-                seatNumbers.get(numberOfAccounts).add(seatNumber);
+                seatNumbers.get(data.size()-1).add(seatNumber);
 
             }
 
@@ -273,13 +296,13 @@ public class mainApp {
 
     public static boolean customerCheck(String passport) {
 
-        for (int i = 0; i <= cmers.size() - 1; i++) {
+        for (int i = 0; i <= customersArrayList.size() - 1; i++) {
 
-            for (int j = 0; j <= cmers.get(i).size() - 1; j++) {
-                Customer a = cmers.get(i).get(j);
+            for (int j = 0; j <= customersArrayList.get(i).size() - 1; j++) {
+                Customer a = customersArrayList.get(i).get(j);
 
                 if (a.getCostumerPassport().equals(passport)) {
-            
+
                     return true;
                 }
 
@@ -291,32 +314,65 @@ public class mainApp {
 
     }
 
-    public static void viewBookings(){
+    public static void displayMenu() {
+        
+        int counter = 1;
+        for (Flight flight : flighData) {
 
+            System.out.print(counter + ". ");
+            flight.showFlightDetails("data");
+            counter++;
+        }
+    }
+
+    public static void view(){
+
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("Please enter your passport:");
+        String passport = keyboard.nextLine();
+        System.out.println("Please enter your Name:");
+        String name = keyboard.nextLine();
+
+        for (int i = 0; i <= customersArrayList.size() - 1; i++) {
+
+            for (int j = 0; j <= customersArrayList.get(i).size() - 1; j++) {
+                Customer checkedCustomer = customersArrayList.get(i).get(j);
+
+                if ( (checkedCustomer.getCostumerPassport().equals(passport)) && (checkedCustomer.getCostumerName().equals(name)) ) {
+
+                    checkedCustomer.displayDetails();
+                    flighData.get(i).showFlightDetails("single");
+                    
+                }
+
+            }
+
+        }
+
+
+    }
+
+
+    public static void viewBookings() {
 
         Scanner keyboard = new Scanner(System.in);
 
         System.out.println("Please Choose your flight");
         System.out.println("FLIGHT OPTIONS ");
-        for (int i = 0; i < data.size(); i++) {
+        displayMenu();
 
-            System.out.println((i+1)+" "+data.get(i));
-
-        }
         System.out.print("Option: ");
-        int opt = keyboard.nextInt() - 1;
+        int optionKey = keyboard.nextInt() - 1;
 
-        for (int i = 0; i < cmers.get(opt).size(); i++) {
-            
+        for (int i = 0; i < customersArrayList.get(optionKey).size(); i++) {
+
             System.out.println("--------------------");
-            System.out.println(flighData.get(opt).toString()+""+cmers.get(opt).get(i).toString());
+            System.out.println(
+                    flighData.get(optionKey).toString() + "" + customersArrayList.get(optionKey).get(i).toString());
 
         }
 
-        
         mainMenu();
-
-
 
     }
 
@@ -342,7 +398,7 @@ public class mainApp {
 
                 seatNumbers.add(new ArrayList<>());
                 data.add(new ArrayList<>());
-                cmers.add(new ArrayList<>());
+                customersArrayList.add(new ArrayList<>());
 
                 int s = seatNumbers.size();
 
