@@ -1,79 +1,82 @@
 package airplaneProject;
 
+
+import java.util.*;
+
 public class Customer {
 
-    private String costumerName;
-    private String costumerDateOfBirth;
-    private String costumerPassport;
+    private String customerName;
+    private String customerDateOfBirth;
+    private String customerPassport;
     private String gender;
     private String phoneNumber;
     private String BookedSeatNumber;
 
-    public Customer(String costumerName, String costumerDateOfBirth, String costumerPassport, String gender,
+    public Customer(String customerName, String customerDateOfBirth, String customerPassport, String gender,
             String phoneNumber, String bookedSeat) {
 
-        this.costumerName = costumerName;
-        this.costumerDateOfBirth = costumerDateOfBirth;
+        this.customerName = customerName;
+        this.customerDateOfBirth = customerDateOfBirth;
         this.gender = gender;
-        this.costumerPassport = costumerPassport;
+        this.customerPassport = customerPassport;
         this.phoneNumber = phoneNumber;
         this.BookedSeatNumber = bookedSeat;
     }
 
-    public Customer(String costumerName, String costumerDateOfBirth, String costumerPassport, String gender) {
+    public Customer(String customerName, String customerDateOfBirth, String customerPassport, String gender) {
 
-        this.costumerName = costumerName;
-        this.costumerDateOfBirth = costumerDateOfBirth;
+        this.customerName = customerName;
+        this.customerDateOfBirth = customerDateOfBirth;
         this.gender = gender;
-        this.costumerPassport = costumerPassport;
+        this.customerPassport = customerPassport;
         this.phoneNumber = null;
 
     }
 
-    public Customer(String costumerName, String costumerDateOfBirth, String costumerPassport) {
+    public Customer(String customerName, String customerDateOfBirth, String customerPassport) {
 
-        this.costumerName = costumerName;
-        this.costumerDateOfBirth = costumerDateOfBirth;
+        this.customerName = customerName;
+        this.customerDateOfBirth = customerDateOfBirth;
         this.gender = null;
-        this.costumerPassport = costumerPassport;
+        this.customerPassport = customerPassport;
         this.phoneNumber = null;
 
     }
 
-    public Customer(String costumerName, String costumerPassport) {
+    public Customer(String customerName, String customerPassport) {
 
-        this.costumerName = costumerName;
-        this.costumerDateOfBirth = null;
+        this.customerName = customerName;
+        this.customerDateOfBirth = null;
         this.gender = null;
-        this.costumerPassport = costumerPassport;
+        this.customerPassport = customerPassport;
         this.phoneNumber = null;
 
     }
 
-    public Customer(String costumerName) {
+    public Customer(String customerName) {
 
-        this.costumerName = costumerName;
-        this.costumerDateOfBirth = null;
+        this.customerName = customerName;
+        this.customerDateOfBirth = null;
         this.gender = null;
-        this.costumerPassport = null;
+        this.customerPassport = null;
         this.phoneNumber = null;
 
     }
 
     public void setBookedSeatNumber(String bookedSeatNumber) {
-        BookedSeatNumber = bookedSeatNumber;
+        this.BookedSeatNumber = bookedSeatNumber;
     }
 
-    public void setCostumerDateOfBirth(String costumerDateOfBirth) {
-        this.costumerDateOfBirth = costumerDateOfBirth;
+    public void setCostumerDateOfBirth(String customerDateOfBirth) {
+        this.customerDateOfBirth = customerDateOfBirth;
     }
 
-    public void setCostumerName(String costumerName) {
-        this.costumerName = costumerName;
+    public void setCostumerName(String customerName) {
+        this.customerName = customerName;
     }
 
-    public void setCostumerPassport(String costumerPassport) {
-        this.costumerPassport = costumerPassport;
+    public void setCostumerPassport(String customerPassport) {
+        this.customerPassport = customerPassport;
     }
 
     public void setGender(String gender) {
@@ -89,15 +92,15 @@ public class Customer {
     }
 
     public String getCostumerDateOfBirth() {
-        return costumerDateOfBirth;
+        return customerDateOfBirth;
     }
 
     public String getCostumerName() {
-        return costumerName;
+        return customerName;
     }
 
     public String getCostumerPassport() {
-        return costumerPassport;
+        return customerPassport;
     }
 
     public String getGender() {
@@ -119,14 +122,12 @@ public class Customer {
 
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
-        return " " + costumerName + ", your flight is booked with the passport number " + costumerPassport
-                + " with the seat  Number " + BookedSeatNumber;
+        return this.customerName;
     }
 
     public void display() {
 
-        System.out.println("Thank you so much " + this.costumerName + " for booking. \n This is your seat number"
+        System.out.println("Thank you so much " + this.customerName + " for booking. \n This is your seat number "
                 + this.BookedSeatNumber);
 
     }
@@ -143,9 +144,9 @@ public class Customer {
         else 
         {
             Customer otherCustomer = (Customer) otherObject;
-            return (costumerName.equals(otherCustomer.costumerName)
-                    &&costumerDateOfBirth.equals(otherCustomer.costumerDateOfBirth)
-                    &&costumerPassport.equals(otherCustomer.costumerPassport)
+            return (customerName.equals(otherCustomer.customerName)
+                    &&customerDateOfBirth.equals(otherCustomer.customerDateOfBirth)
+                    &&customerPassport.equals(otherCustomer.customerPassport)
                     &&BookedSeatNumber.equals(otherCustomer.BookedSeatNumber)
                     &&gender.equals(otherCustomer.gender));
         }
@@ -154,8 +155,30 @@ public class Customer {
 
     public void displayDetails(){
 
-        System.out.println("\nName: "+this.costumerName+"\nDate Of Birth: "+this.costumerDateOfBirth+"\nPassport Number: "+this.costumerPassport+"\nBooked Seat Number:"+this.BookedSeatNumber);
+        System.out.println("\nName: "+this.customerName+"\nDate Of Birth: "+this.customerDateOfBirth+"\nPassport Number: "+this.customerPassport+"\nBooked Seat Number:"+this.BookedSeatNumber);
 
     }
 
+    public boolean checkPassport(ArrayList<ArrayList<Customer>> customers, String passport){
+
+        for (int i = 0; i <= customers.size() - 1; i++) {
+
+            for (int j = 0; j <= customers.get(i).size() - 1; j++) {
+                Customer customer = customers.get(i).get(j);
+
+                if (customer.getCostumerPassport().equals(passport)) {
+
+                    return true;
+                }
+
+            }
+
+        }
+
+        return false;
+
+
+    }
+
+    
 }
