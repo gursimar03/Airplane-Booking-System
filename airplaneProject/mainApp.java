@@ -3,6 +3,10 @@
 //D00251816
 
 
+
+//username - admin
+//Password - admin
+
 package airplaneProject;
 
 import java.io.IOException;
@@ -190,7 +194,7 @@ public class mainApp {
         System.out.println("Please enter Admin password");
         String adminPassword = keyboard.nextLine();
 
-        if (adminName.equals("LordGursimar") && adminPassword.equals("nothankyou")) {
+        if (adminName.equals("admin") && adminPassword.equals("admin")) {
 
             customersArrayList.add(new ArrayList<Customer>());
 
@@ -234,7 +238,7 @@ public class mainApp {
             ArrayList<String> seats = new ArrayList<>();
 
             seats =  SAMPLE_FLIGHT.seatsCreater(numberOfSections, lengthOfSection);
-
+            
             flights.add(new Flight(airline, destinationName, destinationTime, arrivalName, arrivalTime, seats,customersArrayList.get((customersArrayList.size() - 1))));
 
             numberOfAccounts++;
@@ -295,6 +299,9 @@ public class mainApp {
             optionKey = keyboard.nextInt() - 1;
             if (optionKey >= 0 && optionKey <= flights.size() - 1) {
                 invalidInput = false;
+            }
+            else{
+                System.out.println("Please enter correct option");
             }
         } while (invalidInput);
 
